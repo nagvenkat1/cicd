@@ -7,11 +7,11 @@ pipeline {
         branch: 'main'
         }
         }
-        /*stage('mvn path') {
+        stage('mvn path') {
           steps {
                sh 'export PATH=$PATH/usr/share/maven/bin:$PATH'
         }
-        }*/
+        }
         stage('maven build') {
             steps {
                 rtMavenRun (
