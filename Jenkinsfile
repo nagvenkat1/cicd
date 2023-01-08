@@ -18,7 +18,7 @@ pipeline {
                 goals: 'package',
                 pom: 'pom.xml',
                 tool: 'Apache Maven 3.6.3',
-                deployerId: 'MAVEN'
+                deployerId: 'Apache Maven 3.6.3'
                 
                 )
         }
