@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'DOCKER'}
+    agent {label 'key'}
     stages {
         stage('vcs') {
           steps {
@@ -11,8 +11,8 @@ pipeline {
         steps {
         rtMavenDeployer (
         id: 'MAVEN_DEPLOYER'
-        serverid: 'JFROG_JAN23'
-        releaserepo: 'libs-release'
+        serverId: 'JFROG_JAN23'
+        releaseRepo: 'libs-release'
         snapshotRepo: 'libs-snapshot'
          
        )
@@ -23,9 +23,8 @@ pipeline {
       rtMavenRun(
         goals: 'clean install'
         pom: 'pom.xml'
-        tool: 'maven'
+        tool: 'MAVEN'
         deployerId: 'MAVEN_DEPLOYER'
-        
         
         )
         }
