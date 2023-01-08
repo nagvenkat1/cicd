@@ -6,31 +6,31 @@ pipeline {
         git url: 'https://github.com/spring-projects/spring-petclinic.git',
         branch: 'main'
         }
-        stage('mvn path') {
+        }
+        /*stage('mvn path') {
           steps {
                sh 'export PATH=$PATH/usr/share/maven/bin:$PATH'
         }
-        }
-      stage('jfrog') {
-        steps {
-        rtMavenDeployer (
-        id: 'MAVEN',
-        serverId: 'JFROG_JAN23',
-        releaseRepo: 'libs-release',
-        snapshotRepo: 'libs-snapshot'
-         
-       )
+        }*/
+        stage('maven build') {
+            steps {
+                rtMavenRun (
+                goals: 'package',
+                pom: 'pom.xml',
+                tool: 'MAVEN',
+                deployerId: 'MAVEN'
+                
+                )
         }
       }
-
-      stage('maven build') {
-        steps {
-      rtMavenRun (
-        goals: 'clean install',
-        pom: 'pom.xml',
-        tool: 'MAVEN',
-        deployerId: 'MAVEN'
-        
+      stage('jfrog') {
+         steps {
+            rtMavenDeployer (
+            id: 'MAVEN',
+            serverId: 'JFROG_JAN23',
+            releaseRepo: 'libs-release/',
+            snapshotRepo: 'libs-snapshot/'
+            
         )
         }
       }
@@ -56,5 +56,4 @@ pipeline {
 
 }
 
-}
 }
