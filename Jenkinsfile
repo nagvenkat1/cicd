@@ -17,7 +17,7 @@ pipeline {
                 rtMavenRun (
                 goals: 'package',
                 pom: 'pom.xml',
-                tool: 'MAVEN',
+                tool: 'Apache Maven 3.6.3',
                 deployerId: 'MAVEN'
                 
                 )
