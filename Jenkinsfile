@@ -7,6 +7,18 @@ pipeline {
         branch: 'main'
         }
         }
+    stage('maven build') {
+        steps {
+      rtMavenRun (
+        goals: 'clean install',
+        pom: 'pom.xml',
+        tool: 'MAVEN',
+        deployerId: 'MAVEN'
+        
+        )
+        }
+      }  
+        
       stage('jfrog') {
         steps {
         rtMavenDeployer (
@@ -18,17 +30,7 @@ pipeline {
        )
         }
       }
-      stage('maven build') {
-        steps {
-      rtMavenRun(
-        goals: 'clean install',
-        pom: 'pom.xml',
-        tool: 'MAVEN',
-        deployerId: 'MAVEN'
-        
-        )
-        }
-      }
+     
 
       stage('publish') {
          steps {
