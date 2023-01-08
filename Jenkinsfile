@@ -10,7 +10,7 @@ pipeline {
       stage('jfrog') {
         steps {
         rtMavenDeployer (
-        id: 'MAVEN_DEPLOYER',
+        id: 'MAVEN',
         serverId: 'JFROG_JAN23',
         releaseRepo: 'libs-release',
         snapshotRepo: 'libs-snapshot'
@@ -24,7 +24,7 @@ pipeline {
         goals: 'clean install',
         pom: 'pom.xml',
         tool: 'MAVEN',
-        deployerId: 'MAVEN_DEPLOYER'
+        deployerId: 'MAVEN'
         
         )
         }
