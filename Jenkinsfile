@@ -6,19 +6,11 @@ pipeline {
         git url: 'https://github.com/spring-projects/spring-petclinic.git',
         branch: 'main'
         }
+        stage('mvn path') {
+          steps {
+               sh 'export PATH=$PATH/usr/share/maven/bin:$PATH'
         }
-    stage('maven build') {
-        steps {
-      rtMavenRun (
-        goals: 'clean install',
-        pom: 'pom.xml',
-        tool: 'MAVEN',
-        deployerId: 'MAVEN'
-        
-        )
         }
-      }  
-        
       stage('jfrog') {
         steps {
         rtMavenDeployer (
@@ -30,7 +22,18 @@ pipeline {
        )
         }
       }
-     
+
+      stage('maven build') {
+        steps {
+      rtMavenRun (
+        goals: 'clean install',
+        pom: 'pom.xml',
+        tool: 'MAVEN',
+        deployerId: 'MAVEN'
+        
+        )
+        }
+      }
 
       stage('publish') {
          steps {
@@ -53,4 +56,5 @@ pipeline {
 
 }
 
+}
 }
