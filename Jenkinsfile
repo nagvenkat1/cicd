@@ -1,41 +1,33 @@
-pipeline {
+\pipeline {
     agent {label 'key'}
     stages {
-        stage('vcs') {
-          steps {
-        git url: 'https://github.com/spring-projects/spring-petclinic.git',
-        branch: 'main'
+      stage('vcs') {
+        steps {
+            git url: 'https://github.com/nagvenkat1/spring-petclinic.git',
+            branch: 'main'
         }
         }
-        stage('mvn path') {
-          steps {
-               sh 'export PATH=$PATH/usr/share/maven/bin:$PATH'
-        }
-        }
-        stage('maven build') {
-            steps {
-                rtMavenRun (
-                goals: 'package',
-                pom: 'pom.xml',
-                tool: 'Apache Maven 3.6.3',
-                deployerId: 'Apache Maven 3.6.3'
-                
-                )
-        }
-      }
-      stage('jfrog') {
+         stage('jfrog') {
          steps {
             rtMavenDeployer (
-            id: 'MAVEN',
+            id: 'Maven_Deployer',
             serverId: 'JFROG_JAN23',
-            releaseRepo: 'libs-release/',
-            snapshotRepo: 'libs-snapshot/'
-            
-        )
+            releaseRepo: 'libs-release-local',
+            snapshotRepo: 'libs-snapshot-local'
+            )
+         }
+         }
+        stage('maven run') {
+          steps {
+            rtMavenRun (
+              goals: 'clean install',
+              pom: 'pom.xml',
+              tool: 'maven',
+              deployerId: 'Maven_Deployer'
+              )
+          }
         }
-      }
-
-      stage('publish') {
+        stage('publish') {
          steps {
           rtPublishBuildInfo(
             serverId: 'JFROG_JAN23'
@@ -53,7 +45,5 @@ pipeline {
     }
 
 }
-
-}
-
+       }
 }
