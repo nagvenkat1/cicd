@@ -1,4 +1,4 @@
-\pipeline {
+pipeline {
     agent {label 'key'}
     stages {
       stage('vcs') {
